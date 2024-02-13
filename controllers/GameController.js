@@ -62,14 +62,17 @@ const whoStarts = (hero, villain) => {
 
 	if (heroPowerStart > villainPowerStart){
 		console.log("El héroe tiene más poder. Por lo que empieza él")
+		hero.starts = true
 		
 	} else if(heroPowerStart < villainPowerStart) {
 		console.log("El villano tiene más poder. Por lo que empieza él")
+		villain.starts = true
 	} else {
-		console.log("ambos tienen el mismo poder")
+		console.log("ambos tienen el mismo poder, por lo que empezara el heroe al ser el heroe de la historia")
+		hero.starts = true
 	}
 
-
+	return whoStarts;
 }
 
 

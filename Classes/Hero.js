@@ -8,6 +8,7 @@ export default class Hero {
       this.durability = heroData.powerstats.durability;
       this.power = heroData.powerstats.power;
       this.combat = heroData.powerstats.combat;
+      this.starts = false
 
       // Los hitPoints no pueden tener más de 666 
       this.hitPoints = this.strength * 10;

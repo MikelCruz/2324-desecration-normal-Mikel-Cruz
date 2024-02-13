@@ -9,6 +9,7 @@ export default class Villain {
       this.power = villainData[0].powerstats.power;
       this.combat = villainData[0].powerstats.combat;
       this.hitPoints = this.strength * 10;
+      this.starts = false
   }
 }
 
