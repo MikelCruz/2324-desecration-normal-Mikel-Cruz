@@ -13,9 +13,7 @@ const StartNormalGame = async () => {
 	const hero = new Hero(getHero(allSuperPeople));
 	const villain = new Villain(getVillain(allSuperPeople))
 
-	console.log(hero);
-	console.log(villain);
-	
+	startCombat(hero, villain)
 
 
   } catch (error) {
@@ -43,6 +41,36 @@ const getHero = (allSuperPeople) => {
 
 const randomSuperHeroesNumber = (allSuperPeople) => { return Math.floor(Math.random() * allSuperPeople.length) }
 
+
+// ============================
+// 			COMBAT
+// ============================
+
+const startCombat = (hero, villain) => {
+
+	console.log("THE BATTLE BETWEEN " + hero.name + " & " + villain.name + " BEGGINS!")
+	
+	whoStarts(hero, villain)
+
+
+} 
+
+const whoStarts = (hero, villain) => {
+
+	const heroPowerStart = hero.intelligence + hero.combat
+	const villainPowerStart = villain.intelligence + villain.combat
+
+	if (heroPowerStart > villainPowerStart){
+		console.log("El héroe tiene más poder. Por lo que empieza él")
+		
+	} else if(heroPowerStart < villainPowerStart) {
+		console.log("El villano tiene más poder. Por lo que empieza él")
+	} else {
+		console.log("ambos tienen el mismo poder")
+	}
+
+
+}
 
 
 
