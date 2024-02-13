@@ -116,7 +116,7 @@ const figth = (hero, villain) => {
 			if (hero.hitPoints <=0 ) {
 				console.log("EL HEROE " + hero.name + " A PERECIDO")
 			} if( villain.hitPoints <= 0){
-				console.log("EL VILLANO " + hero.name + " A PERECIDO")
+				console.log("EL VILLANO " + villain.name + " A PERECIDO")
 			}
 			
 			stopFigth = true
