@@ -87,23 +87,8 @@ const figth = (hero, villain) => {
 
 	turn = startTurnSelection(turn, hero, villain)
 
-	// console.log("Estadisticas de ambos contrincantes:")
-	// console.log("HEROE:")
-	// showStats(hero)
-
-	// console.log("VILLANO:")
-	// showStats(hero)
-
-	// console.log("")
-	// console.log("BEGGIN!!!!!!!")
-	// console.log("")
-
 	while( !stopFigth ){
-		// Para la batalla
-		if(hero.hitPoints <= 0 || villain.hitPoints <= 0){stopFigth = true}
-		
-		
-
+	
 		// Turno del heroe
 		if(turn === "hero"){
 
@@ -112,6 +97,7 @@ const figth = (hero, villain) => {
 
 			// Muestra las estadisticas
 			showStats(hero)
+			showStats(villain)
 
 			// Cambio de turno
 			console.log("Cambio de turno al villano");
@@ -121,14 +107,28 @@ const figth = (hero, villain) => {
 		} if (turn === "villain"){
 
 			// El villano hace sus cosas
-			Phase1(d100, villain);
+			Phase1(d100, villain, hero);
 
 			// Muestra las estadisticas
 			showStats(villain)
+			showStats(hero)
 
 			// cambio de turno
 			console.log("Cambio de turno al heroe");
 			turn = "hero"
+		}
+
+
+		// Para la batalla
+		if(hero.hitPoints <= 0 || villain.hitPoints <= 0){
+			if (hero.hitPoints <=0 ) {
+				console.log("EL HEROE " + hero.name + " A PERECIDO")
+			} if( villain.hitPoints <= 0){
+				console.log("EL VILLANO " + hero.name + " A PERECIDO")
+			}
+			
+			stopFigth = true
+	
 		}
 	}
 }
@@ -180,53 +180,69 @@ const Pahse2 = (resultadoD20, fighter, target) => {
 }
 
 const DiceD20Phase = (resultadoD20, fighter, target) => {
-	console.log("Entra en phaseD20 con el numero: " +  resultadoD20)
-	const d3 	= new Dice(3);
-	const resultadoD3x1 	= d3.rollD3();
-	const resultadoD3x2		= d3.rollD3() + d3.rollD3()  
-	const resultadoD3x3		= d3.rollD3() + d3.rollD3() + d3.rollD3()
-	const resultadoD3x4		= d3.rollD3() + d3.rollD3() + d3.rollD3() + d3.rollD3()
+	console.log("Entra en phaseD20 con el numero: " + resultadoD20);
+	const d3 = new Dice(3);
+	const resultadoD3x1 = d3.rollD3();
+	const resultadoD3x2 = d3.rollD3() + d3.rollD3();
+	const resultadoD3x3 = d3.rollD3() + d3.rollD3() + d3.rollD3();
+	const resultadoD3x4 = d3.rollD3() + d3.rollD3() + d3.rollD3() + d3.rollD3();
+
+	console.log("Target")
+	console.log(target)
 
 	// Bungle
-	if(resultadoD20 => 1 && resultadoD20 <= 2){
-		let damage = 0
-		if(resultadoD20 === 1){
-			damage = Math.ceil(fighter.speed / resultadoD3x1)
-			fighter.hitPoints -= damage
-		} else if (resultadoD20 === 2){
-			damage = Math.ceil(fighter.speed / resultadoD3x4)
-			fighter.hitPoints -= damage
+	if (resultadoD20 >= 1 && resultadoD20 <= 2) {
+		let damage = 0;
+		if (resultadoD20 === 1) {
+			damage = Math.ceil(fighter.speed / resultadoD3x1);
+			fighter.hitPoints -= damage;
+		} else if (resultadoD20 === 2) {
+			damage = Math.ceil(fighter.speed / resultadoD3x4);
+			fighter.hitPoints -= damage;
 		}
-	} 
+	}
 
 	// Normal Damage
-	if (resultadoD20 => 3 && resultadoD20 <= 17){
-		let damage = Math.ceil(((fighter.power + fighter.strength) * resultadoD20 ) / 100)
+	if (resultadoD20 >= 3 && resultadoD20 <= 17) {
+		let damage = Math.ceil(((fighter.power + fighter.strength) * resultadoD20) / 100);
+		console.log("DAMAGE: " + damage)
 		target.hitPoints -= damage;
-		console.log(fighter.name + " Ha atacado con un ataque normal a " 
-		+ target.name + " Haciendole: " + damage + " Puntos de daño")
+		console.log(
+			fighter.name +
+				" Ha atacado con un ataque normal a " +
+				target.name +
+				" Haciendole: " +
+				damage +
+				" Puntos de daño"
+		);
 	}
 
-	//Critical Damage
-	if (resultadoD20 => 18 && resultadoD20 <= 20){
-		let damage = 0
-		if (resultadoD20 === 18){
-			damage = Math.ceil((fighter.intelligence * fighter.durability) / 100 * resultadoD3x1)
+	// Critical Damage
+	if (resultadoD20 >= 18 && resultadoD20 <= 20) {
+		console.log("Entra en CRITICAL")
+		let damage = 0;
+		if (resultadoD20 === 18) {
+			damage = Math.ceil((fighter.intelligence * fighter.durability) / 100 * resultadoD3x1);
 			target.hitPoints -= damage;
-		} else if (resultadoD20 === 19){
-			damage = Math.ceil((fighter.intelligence * fighter.durability) / 100 * resultadoD3x2)
+		} else if (resultadoD20 === 19) {
+			damage = Math.ceil((fighter.intelligence * fighter.durability) / 100 * resultadoD3x2);
 			target.hitPoints -= damage;
 		} else {
-			damage = Math.ceil((fighter.intelligence * fighter.durability) / 100 * resultadoD3x3)
+			damage = Math.ceil((fighter.intelligence * fighter.durability) / 100 * resultadoD3x3);
 			target.hitPoints -= damage;
 		}
 
-		console.log(fighter.name + " Ha atacado con un ataque CRITICO a " 
-		+ target.name + " Haciendole: " + damage + " Puntos de daño")
+		console.log(
+			fighter.name +
+				" Ha atacado con un ataque CRITICO a " +
+				target.name +
+				" Haciendole: " +
+				damage +
+				" Puntos de daño"
+		);
 	}
-	else;
-	
-}
+};
+
 
 
 
