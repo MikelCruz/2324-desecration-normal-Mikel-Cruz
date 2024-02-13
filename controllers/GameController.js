@@ -95,10 +95,6 @@ const figth = (hero, villain) => {
 			// El heroe hace sus cosas
 			Phase1(d100, hero, villain);
 
-			// Muestra las estadisticas
-			showStats(hero)
-			showStats(villain)
-
 			// Cambio de turno
 			console.log("Cambio de turno al villano");
 			turn = "villain"
@@ -108,10 +104,6 @@ const figth = (hero, villain) => {
 
 			// El villano hace sus cosas
 			Phase1(d100, villain, hero);
-
-			// Muestra las estadisticas
-			showStats(villain)
-			showStats(hero)
 
 			// cambio de turno
 			console.log("Cambio de turno al heroe");
@@ -168,10 +160,11 @@ const Phase1 = (d100, fighter, target) => {
 		console.log("")
 		Pahse2(resultadoD20, fighter, target)
 
-	} else{
-		
-		console.log(fighter.name + " Ha fallado!")
-	}
+		// Muestra las estadisticas
+		showStats(fighter)
+		showStats(target)
+
+	} else{ console.log(fighter.name + " Ha fallado!") }
 }
 
 const Pahse2 = (resultadoD20, fighter, target) => {
@@ -180,15 +173,12 @@ const Pahse2 = (resultadoD20, fighter, target) => {
 }
 
 const DiceD20Phase = (resultadoD20, fighter, target) => {
-	console.log("Entra en phaseD20 con el numero: " + resultadoD20);
+	console.log( fighter.name + " obtiene un: " + resultadoD20 + " y");
 	const d3 = new Dice(3);
 	const resultadoD3x1 = d3.rollD3();
 	const resultadoD3x2 = d3.rollD3() + d3.rollD3();
 	const resultadoD3x3 = d3.rollD3() + d3.rollD3() + d3.rollD3();
 	const resultadoD3x4 = d3.rollD3() + d3.rollD3() + d3.rollD3() + d3.rollD3();
-
-	console.log("Target")
-	console.log(target)
 
 	// Bungle
 	if (resultadoD20 >= 1 && resultadoD20 <= 2) {
@@ -200,26 +190,19 @@ const DiceD20Phase = (resultadoD20, fighter, target) => {
 			damage = Math.ceil(fighter.speed / resultadoD3x4);
 			fighter.hitPoints -= damage;
 		}
+		console.log("El ataque de " + fighter.name + " es desastroso y se ejerce un daño de: " + damage + " puntos")
 	}
 
 	// Normal Damage
 	if (resultadoD20 >= 3 && resultadoD20 <= 17) {
 		let damage = Math.ceil(((fighter.power + fighter.strength) * resultadoD20) / 100);
-		console.log("DAMAGE: " + damage)
 		target.hitPoints -= damage;
-		console.log(
-			fighter.name +
-				" Ha atacado con un ataque normal a " +
-				target.name +
-				" Haciendole: " +
-				damage +
-				" Puntos de daño"
+		console.log( fighter.name + " Ha atacado con un ataque normal a " + target.name + " Haciendole: " + damage + " Puntos de daño"
 		);
 	}
 
 	// Critical Damage
 	if (resultadoD20 >= 18 && resultadoD20 <= 20) {
-		console.log("Entra en CRITICAL")
 		let damage = 0;
 		if (resultadoD20 === 18) {
 			damage = Math.ceil((fighter.intelligence * fighter.durability) / 100 * resultadoD3x1);
@@ -232,15 +215,11 @@ const DiceD20Phase = (resultadoD20, fighter, target) => {
 			target.hitPoints -= damage;
 		}
 
-		console.log(
-			fighter.name +
-				" Ha atacado con un ataque CRITICO a " +
-				target.name +
-				" Haciendole: " +
-				damage +
-				" Puntos de daño"
+		console.log( fighter.name + " Ha atacado con un ataque CRITICO a " + target.name + " Haciendole: " + damage + " Puntos de daño"
 		);
 	}
+
+	console.log("-----------------------")
 };
 
 
