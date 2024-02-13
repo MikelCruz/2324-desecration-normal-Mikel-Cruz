@@ -1,12 +1,23 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const PORT = 3000;
+const bodyParser = require("body-parser");
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+//Use bodyparser
+app.use(bodyParser.json());
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-  console.log("Hello wooorld")
-});
+async function start() {
+  try
+  {
+      app.listen(PORT, () =>{
+          console.log(`API is listening on port ${PORT}`);
+      });
+      console.log('Conexion Correcta.')
+  }
+  catch (error)
+  {
+      console.log(`Error al conectar a la base de datos: ${error.message}`);
+  }
+}
+
+start();
