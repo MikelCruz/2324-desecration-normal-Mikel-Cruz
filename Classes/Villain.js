@@ -8,8 +8,8 @@ export default class Villain {
       this.durability = villainData[0].powerstats.durability;
       this.power = villainData[0].powerstats.power;
       this.combat = villainData[0].powerstats.combat;
-      this.hitPoints = this.strength * 10;
       this.starts = false
+      this.hitPoints = this.strength * 10;
   }
 }
 
