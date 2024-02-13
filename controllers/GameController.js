@@ -1,7 +1,6 @@
-// GameController.js
-
 import GameService from "../services/GameService.js";
-
+import Hero from "../Classes/Hero.js";
+import Villain from "../Classes/Villain.js";
 
 // GAME START
 const StartNormalGame = async () => {
@@ -11,9 +10,14 @@ const StartNormalGame = async () => {
       return { message: 'No existen superPersonas' };
     }
 
-	const villain = getVillain(allSuperPeople);
-	const superHero = getHero(allSuperPeople)
+	const hero = new Hero(getHero(allSuperPeople));
+	const villain = new Villain(getVillain(allSuperPeople))
+
+	console.log(hero);
+	console.log(villain);
 	
+
+
   } catch (error) {
     console.error('Error al obtener datos:', error);
   }
@@ -24,9 +28,7 @@ const StartNormalGame = async () => {
 // ============================
 
 //Funcion que selecciona al villano de todos los heroes
-const getVillain =(allSuperPeople) => {
-	return allSuperPeople.filter((superPerson) => superPerson.name === "Junkpile");
-}
+const getVillain =(allSuperPeople) => { return allSuperPeople.filter((superPerson) => superPerson.name === "Junkpile"); }
 
 // Funcion que elige un heroe aleatorio (No puede elegir a Junkpile)
 const getHero = (allSuperPeople) => {
